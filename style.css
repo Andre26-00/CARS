@@ -1,0 +1,736 @@
+/* -------- GENERAL -------- */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    overflow-x:clip;
+}
+
+body{
+
+    color:white;
+    font-family:Arial,sans-serif;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+    min-height:100dvh;
+    background-color:#020507;
+    background-image:
+        radial-gradient(1px 1px at 24px 31px, rgba(213,245,255,.7) 50%, transparent 100%),
+        radial-gradient(1px 1px at 138px 104px, rgba(98,208,255,.55) 50%, transparent 100%),
+        linear-gradient(160deg, #020508 0%, #06130f 58%, #010304 100%);
+    background-size:190px 170px, 260px 230px, 100% 100%;
+}
+
+
+/* -------- INTRO -------- */
+
+.intro{
+    text-align:center;
+    position:relative;
+    z-index:10;
+}
+
+.intro_title{
+    font-size:4rem;
+    margin-top:20px;
+}
+
+.intro_title span{
+    color:#00aaff;
+    text-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00aaff,
+        0 0 40px #00aaff;
+}
+
+.intro-message{
+    margin-top:20px;
+    font-size:1.3rem;
+    color:#d5e9ff;
+}
+
+/* -------- BOTÓN -------- */
+
+.intro-btn{
+    margin-top:30px;
+    padding:15px 35px;
+    border:none;
+    border-radius:40px;
+    cursor:pointer;
+
+    color:white;
+    font-size:1.2rem;
+
+    background:linear-gradient(
+        90deg,
+        #0066ff,
+        #00aaff
+    );
+
+    box-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00aaff;
+}
+
+.intro-btn:hover{
+    transform:scale(1.05);
+}
+
+/* -------- AUTO -------- */
+
+.intro-car-wrapper{
+    position:relative;
+    display:inline-block;
+}
+
+.intro-car{
+    width:300px;
+
+    filter:
+        drop-shadow(0 0 20px #00aaff);
+}
+
+.intro-track{
+    width:100%;
+    height:8px;
+
+    margin-top:10px;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        #00aaff,
+        transparent
+    );
+}
+
+/* -------- HUMO -------- */
+
+.smoke{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    left:20px;
+    bottom:20px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.5);
+
+    filter:blur(12px);
+
+    opacity:0;
+}
+
+.launching .smoke{
+    animation:smoke 1s forwards;
+}
+
+@keyframes smoke{
+
+    0%{
+        opacity:0;
+        transform:scale(.3);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            scale(3)
+            translate(-80px,-50px);
+    }
+
+}
+
+/* -------- COCHE CORRIENDO -------- */
+
+.launching .intro-car{
+    animation:runCar 1.2s forwards;
+}
+
+@keyframes runCar{
+
+    to{
+        transform:translateX(150vw);
+    }
+
+}
+
+/* -------- INTRO DESAPARECE -------- */
+
+.exiting{
+    animation:fadeOut 1s forwards;
+}
+
+@keyframes fadeOut{
+    to{
+        opacity:0;
+        visibility:hidden;
+    }
+}
+
+/* -------- CARROS VOLANDO -------- */
+
+#cars{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+}
+
+.floating-car{
+    position:absolute;
+
+    width:120px;
+
+    left:-250px;
+    opacity:.9;
+    mix-blend-mode:screen;
+    filter:drop-shadow(0 0 12px rgba(0,174,255,.55));
+
+    animation:driveAcross linear infinite;
+}
+
+@keyframes driveAcross{
+
+    to{
+        transform:translateX(150vw);
+    }
+
+}
+
+/* -------- RAMO -------- */
+
+.ramo{
+    position:fixed;
+    left:50%;
+    bottom:-700px;
+    transform:translateX(-50%) scale(.78);
+    transform-origin:bottom center;
+    width:420px;
+    height:650px;
+    opacity:0;
+    pointer-events:none;
+    z-index:3;
+    transition:2s;
+}
+
+.ramo.show{
+    bottom:2vh;
+    opacity:1;
+}
+
+/* -------- MENSAJE FINAL -------- */
+
+#mensaje-final{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    text-align:center;
+    padding:6vh 24px 0;
+    justify-content:flex-start;
+    gap:14px;
+    background:transparent;
+
+    opacity:0;
+    visibility:hidden;
+    z-index:5;
+    pointer-events:none;
+    transition:1.5s;
+}
+
+#mensaje-final.show{
+
+    opacity:1;
+    visibility:visible;
+}
+
+#mensaje-final h1{
+
+    color:#e7faff;
+    max-width:760px;
+    font-size:2.5rem;
+    line-height:1.08;
+
+    text-shadow:
+        0 0 12px rgba(0,190,255,.8),
+        0 0 32px rgba(0,120,255,.65);
+}
+
+#mensaje-final p{
+    max-width:460px;
+    color:#d7e7e8;
+    font-size:1.05rem;
+    line-height:1.5;
+    text-shadow:0 2px 10px #000;
+}
+
+@keyframes mover{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+/* =========================
+    GIRASOLES
+========================= */
+
+.girasol {
+    position: absolute;
+    width: 125px;
+    height: 125px;
+    --petalo-claro:#ff9fc7;
+    --petalo-oscuro:#da4c8d;
+    --centro-claro:#ffd647;
+    --centro-oscuro:#ed8230;
+    animation: mover 3s ease-in-out infinite;
+}
+
+/* Pétalos base */
+.petalo {
+    position: absolute;
+    width: 34px;
+    height: 65px;
+    left: 45px;
+    top: 30px;
+    border:2px solid #24202a;
+    border-radius:50%;
+    clip-path:none;
+    transform-origin: 17px 32px;
+}
+
+.petalo {
+    background: linear-gradient(
+        to bottom,
+        var(--petalo-claro),
+        var(--petalo-oscuro)
+    );
+}
+
+.centro {
+    background: radial-gradient(
+        circle,
+        var(--centro-claro) 0 28%,
+        var(--centro-oscuro) 30% 72%,
+        #332028 74% 100%
+    );
+    border:2px solid #24202a;
+}
+
+
+/* =========================
+   PÉTALOS
+========================= */
+
+.p1  { transform: rotate(0deg) translateY(-35px); }
+.p2  { transform: rotate(30deg) translateY(-35px); }
+.p3  { transform: rotate(60deg) translateY(-35px); }
+.p4  { transform: rotate(90deg) translateY(-35px); }
+.p5  { transform: rotate(120deg) translateY(-35px); }
+.p6  { transform: rotate(150deg) translateY(-35px); }
+.p7  { transform: rotate(180deg) translateY(-35px); }
+.p8  { transform: rotate(210deg) translateY(-35px); }
+.p9  { transform: rotate(240deg) translateY(-35px); }
+.p10 { transform: rotate(270deg) translateY(-35px); }
+.p11 { transform: rotate(300deg) translateY(-35px); }
+.p12 { transform: rotate(330deg) translateY(-35px); }
+
+
+/* =========================
+   CENTRO
+========================= */
+
+.centro {
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    left: 34px;
+    top: 34px;
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow:none;
+}
+
+
+/* =========================
+   POSICIÓN DE LAS FLORES
+========================= */
+
+.flor1 {
+    top: 30px;
+    left: 40px;
+    --petalo-claro:#a8dcff;
+    --petalo-oscuro:#3988d2;
+    --centro-claro:#ffe36c;
+    --centro-oscuro:#b86a24;
+    scale:.86;
+}
+
+.flor2 {
+    top: 0;
+    left: 147px;
+    --petalo-claro:#fff0a0;
+    --petalo-oscuro:#e5a51f;
+    --centro-claro:#92502b;
+    --centro-oscuro:#49271d;
+    scale:.86;
+}
+
+.flor3 {
+    top: 30px;
+    right: 40px;
+    --petalo-claro:#9ce8f5;
+    --petalo-oscuro:#309cc4;
+    --centro-claro:#ffe06b;
+    --centro-oscuro:#aa6425;
+    scale:.84;
+}
+
+.flor4 {
+    top: 95px;
+    left: 0;
+    --petalo-claro:#ffef9b;
+    --petalo-oscuro:#e2a31c;
+    --centro-claro:#4b9bd1;
+    --centro-oscuro:#245c9d;
+    scale:.78;
+}
+
+.flor5 {
+    top: 80px;
+    left: 147px;
+    --petalo-claro:#b5e4ff;
+    --petalo-oscuro:#498fd1;
+    --centro-claro:#ffe56b;
+    --centro-oscuro:#b36b26;
+}
+
+.flor6 {
+    top: 95px;
+    right: 0;
+    --petalo-claro:#fff0a0;
+    --petalo-oscuro:#e3a11c;
+    --centro-claro:#8f4c26;
+    --centro-oscuro:#47261a;
+    scale:.78;
+}
+
+.flor7 {
+    top: 165px;
+    left: 40px;
+    --petalo-claro:#86cbff;
+    --petalo-oscuro:#426fce;
+    --centro-claro:#ffe36b;
+    --centro-oscuro:#a75f24;
+    scale:.8;
+}
+
+.flor8 {
+    top: 180px;
+    left: 147px;
+    --petalo-claro:#fff0a0;
+    --petalo-oscuro:#e4a31c;
+    --centro-claro:#88502b;
+    --centro-oscuro:#46251b;
+    scale:.8;
+}
+
+.flor9 {
+    top: 165px;
+    right: 40px;
+    --petalo-claro:#9ee8f3;
+    --petalo-oscuro:#298fbb;
+    --centro-claro:#ffe36b;
+    --centro-oscuro:#aa6425;
+    scale:.8;
+}
+
+
+/* =========================
+   TALLOS
+========================= */
+
+.tallo {
+    position: absolute;
+    width: 7px;
+    height: 270px;
+    bottom: 105px;
+    left: 50%;
+    background: linear-gradient(
+        to right,
+        #123d2b,
+        #3f8f55
+    );
+    border-radius: 10px;
+    transform-origin: bottom;
+}
+
+
+/* =========================
+   HOJAS
+========================= */
+
+.hoja {
+    position: absolute;
+    width: 80px;
+    height: 38px;
+    background: linear-gradient(
+        135deg,
+        #4c9b55,
+        #176332
+    );
+    border-radius: 100% 0 100% 0;
+    filter:drop-shadow(1px 0 #1e3921) drop-shadow(-1px 0 #1e3921) drop-shadow(0 1px #1e3921) drop-shadow(0 -1px #1e3921);
+}
+
+.hoja1 {
+    bottom: 190px;
+    left: 90px;
+    transform: rotate(-30deg);
+}
+
+.hoja2 {
+    bottom: 210px;
+    right: 85px;
+    transform: rotate(35deg);
+}
+
+.hoja3 {
+    bottom: 145px;
+    left: 125px;
+    transform: rotate(20deg);
+}
+
+.hoja4 {
+    bottom: 155px;
+    right: 110px;
+    transform: rotate(-25deg);
+}
+
+.hoja5 {
+    bottom: 250px;
+    left: 48px;
+    transform: rotate(-42deg);
+}
+
+.hoja6 {
+    bottom: 270px;
+    left: 112px;
+    transform: rotate(28deg);
+}
+
+.hoja7 {
+    bottom: 265px;
+    right: 102px;
+    transform: rotate(-25deg);
+}
+
+.hoja8 {
+    bottom: 245px;
+    right: 45px;
+    transform: rotate(42deg);
+}
+
+
+/* =========================
+   ENVOLTURA
+========================= */
+
+.envoltura {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 365px;
+    height: 245px;
+    z-index: 20;
+
+    background:linear-gradient(135deg, #d8ad72, #a96e3f 56%, #704226);
+
+    clip-path:polygon(0 0, 36% 8%, 50% 28%, 64% 8%, 100% 0, 76% 27%, 56% 88%, 50% 100%, 44% 88%, 24% 27%);
+
+    filter:drop-shadow(0 12px 15px rgba(0,0,0,.35));
+}
+
+.envoltura::before,
+.envoltura::after {
+    content:"";
+    position:absolute;
+    top:0;
+    width:56%;
+    height:100%;
+}
+
+.envoltura::before {
+    left:0;
+    clip-path:polygon(0 0, 100% 14%, 72% 100%, 42% 76%, 0 31%);
+    background:linear-gradient(145deg, rgba(255,231,185,.95), rgba(194,142,83,.48) 65%, rgba(112,65,35,.78));
+}
+
+.envoltura::after {
+    right:0;
+    clip-path:polygon(100% 0, 0 14%, 28% 100%, 58% 76%, 100% 31%);
+    background:linear-gradient(215deg, rgba(238,204,150,.95), rgba(171,111,60,.55) 68%, rgba(96,55,31,.8));
+}
+
+.papel {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 305px;
+    height: 200px;
+    z-index: 21;
+
+    background:linear-gradient(115deg, #f3d8a9, #d0a06a 48%, #a56c40);
+    filter:drop-shadow(0 0 1px #49301e) drop-shadow(0 0 9px rgba(133,83,43,.3));
+
+    clip-path:polygon(0 0, 35% 9%, 50% 30%, 65% 9%, 100% 0, 76% 29%, 56% 88%, 50% 100%, 44% 88%, 24% 29%);
+}
+
+.papel::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    clip-path:polygon(0 0, 54% 19%, 50% 100%, 0 64%);
+    background:linear-gradient(130deg, rgba(255,246,220,.72), rgba(118,72,38,.22));
+}
+
+.papel::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg, transparent 0 27%, #dc9d28 28% 35%, transparent 36%), linear-gradient(108deg, transparent 0 22%, rgba(255,255,255,.55) 23% 24%, transparent 25% 47%, rgba(74,44,23,.28) 49% 50%, transparent 52% 76%, rgba(255,255,255,.4) 78% 79%, transparent 81%);
+}
+
+.lazo {
+    position:absolute;
+    left:50%;
+    bottom:92px;
+    width:68px;
+    height:32px;
+    transform:translateX(-50%);
+    z-index:22;
+    pointer-events:none;
+}
+
+.lazo::before,
+.lazo::after {
+    content:"";
+    position:absolute;
+    top:4px;
+    width:23px;
+    height:18px;
+    border:4px solid #d99223;
+    border-radius:55% 45% 55% 45%;
+    background:#ffd55d;
+}
+
+.lazo::before {
+    left:4px;
+    transform:rotate(24deg);
+}
+
+.lazo::after {
+    right:4px;
+    transform:rotate(-24deg);
+}
+
+.lazo span {
+    position:absolute;
+    top:10px;
+    left:27px;
+    width:16px;
+    height:14px;
+    border:2px solid #9d5920;
+    border-radius:45%;
+    background:#ffd55d;
+    z-index:1;
+}
+
+
+/* =========================
+   ANIMACIÓN
+========================= */
+
+@keyframes mover {
+
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-7px) rotate(2deg);
+    }
+}
+#mensaje-final{
+
+    z-index:10000;
+
+    background:transparent;
+}
+
+.brillo{
+    position:fixed;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#c8f5ff;
+    box-shadow:0 0 10px 2px rgba(77,204,255,.7);
+    pointer-events:none;
+    z-index:2;
+    animation:destello 2s ease-out forwards;
+}
+
+@keyframes destello{
+    0%{ opacity:0; transform:scale(.4); }
+    25%{ opacity:1; }
+    100%{ opacity:0; transform:scale(1.8); }
+}
+
+@media (max-width:600px){
+    .intro_title{ font-size:2.2rem; }
+    .intro-message{ font-size:1rem; padding:0 18px; }
+    .intro-car{ width:min(300px, 78vw); }
+    .ramo{ transform:translateX(-50%) scale(.66); }
+    #mensaje-final{ padding:5vh 18px 0; gap:10px; }
+    #mensaje-final h1{ max-width:360px; font-size:1.65rem; }
+    #mensaje-final p{ max-width:340px; font-size:.92rem; }
+}
+
+@media (max-height:700px){
+    .ramo{ transform:translateX(-50%) scale(.58); }
+    #mensaje-final{ padding-top:4vh; gap:8px; }
+    #mensaje-final h1{ font-size:2rem; }
+    #mensaje-final p{ font-size:.9rem; }
+}
+
+@media (max-width:600px) and (max-height:700px){
+    .ramo{ transform:translateX(-50%) scale(.5); }
+    #mensaje-final h1{ font-size:1.4rem; }
+}
